@@ -1,0 +1,45 @@
+﻿# Visual Studio 관련 파일 및 폴더 제외
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 빌드 결과물
+bin/
+obj/
+
+# 프로젝트 사용자가 설정한 환경
+*.rsuser
+*.sln.docstates
+*.vcxproj.user
+*.pdb
+
+# 사용자 별 설정 파일
+*.user
+*.userosscache
+
+# Rider IDE 설정 파일
+.idea/
+*.sln.iml
+
+# Recycle Bin used by Visual Studio
+$RECYCLE.BIN/
+
+# 로그 파일
+*.log
+
+# NPM 디렉토리
+node_modules/
+
+# 환경 설정 파일
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Resharper
+*.DotSettings.user
+
+# Google Cloud API 자격 증명 파일
+*.json
+service-account.json
