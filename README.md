@@ -3,6 +3,7 @@
 
 Program Language : C#<br/>
 Framework : .net framework 4.8 <br/>
+Using : Google.Cloud.Vision.V1 <br/>
 <br/>
 
 # 업데이트 내역
