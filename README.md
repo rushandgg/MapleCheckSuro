@@ -8,6 +8,10 @@
 - Using : Google.Cloud.Vision.V1 <br/>
 <br/>
 
+# 프로그램 순서도
+![file (1)](https://github.com/rushandgg/MapleSuro/assets/60992415/a15a56df-b031-41a4-8839-7b6aa2387856)
+<br/>
+<br/>
 # 프로그램 사용 예시
 #### 1. 메인화면
 ![1  메인화면](https://github.com/rushandgg/MapleSuro/assets/60992415/5e522a18-ba7c-47b7-ab6e-c8c930aac268)
