@@ -9,7 +9,7 @@
 <br/>
 
 # 프로그램 순서도
-![file (1)](https://github.com/rushandgg/MapleSuro/assets/60992415/a15a56df-b031-41a4-8839-7b6aa2387856)
+![프로그램 순서도1](https://github.com/rushandgg/MapleSuro/assets/60992415/36665175-2353-459a-a3ab-27a67bb80603)
 <br/>
 <br/>
 # 프로그램 사용 예시
