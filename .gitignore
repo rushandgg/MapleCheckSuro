@@ -43,3 +43,5 @@ appsettings.Staging.json
 # Google Cloud API 자격 증명 파일
 *.json
 service-account.json
+
+*.pfx

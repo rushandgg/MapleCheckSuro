@@ -162,6 +162,8 @@ namespace MapleCheckSuro
 
         private void ShowListView()
         {
+            listView1.Items.Clear();
+
             if (characterList.Count > 0)
             {
                 for (int i = 0; i < characterList.Count; i++)
@@ -221,7 +223,7 @@ namespace MapleCheckSuro
         {
             try
             {
-                Credentials credentials = new Credentials
+                Credentials credentials = new Credentials // 프로그램 사용시 이 부분 개인에 맞게 수정할 것, 개인 api key 입력
                 {
                     type = "",
                     project_id = "",
@@ -278,8 +280,9 @@ namespace MapleCheckSuro
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             // ListView에서 선택된 아이템들의 값을 가져오기
-            foreach (ListViewItem selectedItem in listView1.SelectedItems)
+            if (listView1.SelectedItems.Count > 0)
             {
+                var selectedItem = listView1.SelectedItems[0];
                 listViewIdx = selectedItem.Index;
                 subCharacter = selectedItem.SubItems[2].Text;
                 subScore = selectedItem.SubItems[3].Text;
@@ -310,8 +313,7 @@ namespace MapleCheckSuro
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string filePath = Path.Combine(myDocumentsPath, "꿈터달성캐릭.txt");
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "꿈터달성캐릭.txt");
 
             try
             {

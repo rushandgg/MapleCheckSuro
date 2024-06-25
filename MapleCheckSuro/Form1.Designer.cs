@@ -41,6 +41,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.characterBtn = new System.Windows.Forms.Button();
@@ -166,7 +167,6 @@
             this.label99 = new System.Windows.Forms.Label();
             this.label100 = new System.Windows.Forms.Label();
             this.label101 = new System.Windows.Forms.Label();
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -287,6 +287,11 @@
             // 
             this.columnHeader2.Text = "꿈터캐릭";
             this.columnHeader2.Width = 90;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "꿈터캐릭2";
+            this.columnHeader8.Width = 90;
             // 
             // columnHeader3
             // 
@@ -1404,11 +1409,6 @@
             this.label101.TabIndex = 170;
             this.label101.Text = "10";
             // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "꿈터캐릭2";
-            this.columnHeader8.Width = 90;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1546,7 +1546,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "꿈터 수로 계산 프로그램 v1.0.1";
+            this.Text = "꿈터 수로 계산 프로그램 v1.1.0";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
