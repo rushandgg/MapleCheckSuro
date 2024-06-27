@@ -167,6 +167,7 @@
             this.label99 = new System.Windows.Forms.Label();
             this.label100 = new System.Windows.Forms.Label();
             this.label101 = new System.Windows.Forms.Label();
+            this.exportExcelBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -395,7 +396,7 @@
             // 
             // cellDelBtn
             // 
-            this.cellDelBtn.Location = new System.Drawing.Point(1004, 440);
+            this.cellDelBtn.Location = new System.Drawing.Point(1006, 440);
             this.cellDelBtn.Name = "cellDelBtn";
             this.cellDelBtn.Size = new System.Drawing.Size(58, 46);
             this.cellDelBtn.TabIndex = 20;
@@ -873,7 +874,7 @@
             // 
             // addBtn
             // 
-            this.addBtn.Location = new System.Drawing.Point(943, 440);
+            this.addBtn.Location = new System.Drawing.Point(944, 440);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(58, 46);
             this.addBtn.TabIndex = 123;
@@ -1409,11 +1410,22 @@
             this.label101.TabIndex = 170;
             this.label101.Text = "10";
             // 
+            // exportExcelBtn
+            // 
+            this.exportExcelBtn.Location = new System.Drawing.Point(1068, 440);
+            this.exportExcelBtn.Name = "exportExcelBtn";
+            this.exportExcelBtn.Size = new System.Drawing.Size(58, 46);
+            this.exportExcelBtn.TabIndex = 180;
+            this.exportExcelBtn.Text = "(4) 엑셀";
+            this.exportExcelBtn.UseVisualStyleBackColor = true;
+            this.exportExcelBtn.Click += new System.EventHandler(this.exportExcelBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1381, 565);
+            this.Controls.Add(this.exportExcelBtn);
             this.Controls.Add(this.label92);
             this.Controls.Add(this.label93);
             this.Controls.Add(this.label94);
@@ -1699,6 +1711,7 @@
         private System.Windows.Forms.Label label100;
         private System.Windows.Forms.Label label101;
         private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.Button exportExcelBtn;
     }
 }
 

@@ -93,6 +93,8 @@ namespace MapleCheckSuro
 
         private void extractBtn_Click(object sender, EventArgs e)
         {
+            characterList.Clear();
+            scoreList.Clear();
             if (pictureBox1.Image == null)
             {
                 MessageBox.Show("Please load an image first.");
@@ -438,6 +440,49 @@ namespace MapleCheckSuro
             {
                 scoreLb.Text = "점수 합 : " + totalScore.ToString();
                 solLb.Text = "조각 : " + (totalScore / 1000).ToString();
+            }
+        }
+
+        private void exportExcelBtn_Click(object sender, EventArgs e) // ListView의 내용을 엑셀로 저장
+        {
+            // 엑셀 파일 생성
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Sheet1");
+
+                // 헤더 작성
+                worksheet.Cell(1, 1).Value = "번호";
+                worksheet.Cell(1, 2).Value = "꿈터캐릭2";
+                worksheet.Cell(1, 3).Value = "꿈터수로";
+                worksheet.Cell(1, 4).Value = "달성본캐";
+
+                // ListView 데이터를 엑셀에 작성
+                int currentRow = 2;
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    worksheet.Cell(currentRow, 1).Value = item.SubItems[0].Text; // 번호
+                    worksheet.Cell(currentRow, 2).Value = item.SubItems[2].Text; // 꿈터캐릭2
+                    worksheet.Cell(currentRow, 3).Value = Convert.ToInt32(item.SubItems[3].Text.Replace(",","")); // 꿈터수로
+                    worksheet.Cell(currentRow, 4).Value = item.SubItems[4].Text; // 달성본캐
+                    currentRow++;
+                }
+
+                // 사용자 문서 폴더 경로
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                string todayDate = DateTime.Now.ToString("MM-dd");
+                string filePath = Path.Combine(documentsPath, "꿈터수로정리" + todayDate + ".xlsx");
+
+                // Excel 파일 저장
+                try
+                {
+                    workbook.SaveAs(filePath);
+                    MessageBox.Show($"파일이 성공적으로 저장되었습니다: {filePath}", "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"파일 저장 중 오류가 발생했습니다: {ex.Message}", "저장 실패", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }
