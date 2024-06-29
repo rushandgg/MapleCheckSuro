@@ -17,7 +17,7 @@ using System.Collections;
 
 namespace MapleCheckSuro
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private int clickCount1 = 0;
         private int clickCount2 = 0;
@@ -28,13 +28,14 @@ namespace MapleCheckSuro
         public Dictionary<string, string> heroDict = new Dictionary<string, string>();
 
         private CharacterForm characterForm;
+        private ChartForm chartForm;
 
         // 수정할때 임시로 받아둘 데이터
         private string subCharacter;
         private string subScore;
         private int listViewIdx;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -164,7 +165,7 @@ namespace MapleCheckSuro
 
         private void ShowListView()
         {
-            listView1.Items.Clear();
+            mainListView.Items.Clear();
 
             if (characterList.Count > 0)
             {
@@ -216,7 +217,7 @@ namespace MapleCheckSuro
                             }
                         }
                     }
-                    listView1.Items.Add(item);
+                    mainListView.Items.Add(item);
                 }
             }
         }
@@ -270,36 +271,23 @@ namespace MapleCheckSuro
         {
             if (characterForm == null || characterForm.IsDisposed)
             {
-                characterForm = new CharacterForm(this); // Form2 인스턴스 생성
-                characterForm.Show(); // Form2를 Modeless로 열기
+                characterForm = new CharacterForm(this); 
+                characterForm.Show(); 
             }
             else
             {
-                characterForm.Focus(); // 이미 열려있는 경우 Form2에 포커스를 줌
+                characterForm.Focus(); // 이미 열려있는 경우 포커스를 줌
             }
         }
 
-        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            // ListView에서 선택된 아이템들의 값을 가져오기
-            if (listView1.SelectedItems.Count > 0)
-            {
-                var selectedItem = listView1.SelectedItems[0];
-                listViewIdx = selectedItem.Index;
-                subCharacter = selectedItem.SubItems[2].Text;
-                subScore = selectedItem.SubItems[3].Text;
-                subChaTB.Text = subCharacter;
-                scoreTB.Text = subScore;
-            }
-        }
 
         private void cellModifyBtn_Click(object sender, EventArgs e)
         {
             string modifyName = subChaTB.Text;
             string modifyScore = scoreTB.Text;
 
-            listView1.Items[listViewIdx].SubItems[2].Text = modifyName;
-            listView1.Items[listViewIdx].SubItems[3].Text = modifyScore;
+            mainListView.Items[listViewIdx].SubItems[2].Text = modifyName;
+            mainListView.Items[listViewIdx].SubItems[3].Text = modifyScore;
 
             characterList[listViewIdx] = modifyName;
             scoreList[listViewIdx] = modifyScore;
@@ -308,12 +296,160 @@ namespace MapleCheckSuro
             {
                 if (heroDict.ContainsKey(modifyName)) 
                 {
-                    listView1.Items[listViewIdx].SubItems[4].Text = heroDict[modifyName];
+                    mainListView.Items[listViewIdx].SubItems[4].Text = heroDict[modifyName];
                 }
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void AddUniqueValuesToComboBox()
+        {
+            // 중복을 제거할 HashSet 생성
+            HashSet<string> uniqueValues = new HashSet<string>();
+
+            // Dictionary의 값들 중복 없이 ComboBox에 추가
+            foreach (var kvp in heroDict)
+            {
+                string value = kvp.Value;
+
+                // HashSet을 사용하여 중복된 값 체크 후 추가
+                if (!uniqueValues.Contains(value))
+                {
+                    characterCB.Items.Add(value);
+                    uniqueValues.Add(value);
+                }
+            }
+        }
+
+        private void cellDelBtn_Click(object sender, EventArgs e) // 불필요한 값 직접 삭제
+        {
+            characterList.RemoveAt(listViewIdx);
+            scoreList.RemoveAt(listViewIdx);
+
+            mainListView.Items.RemoveAt(listViewIdx);
+        }
+
+        private void addBtn_Click(object sender, EventArgs e) // 직접 입력
+        {
+            string modifyName = subChaTB.Text;
+            string modifyScore = scoreTB.Text;
+
+            ListViewItem listViewItem = new ListViewItem((mainListView.Items.Count+1).ToString());
+            listViewItem.SubItems.Add(modifyName);
+            listViewItem.SubItems.Add(modifyName);
+            listViewItem.SubItems.Add(modifyScore);
+
+            if (heroDict.Count > 0)
+            {
+                if (heroDict.ContainsKey(modifyName))
+                {
+                    listViewItem.SubItems.Add(heroDict[modifyName]);
+                }
+            }
+            mainListView.Items.Add(listViewItem);
+        }
+
+        private void exportExcelBtn_Click(object sender, EventArgs e) // ListView의 내용을 엑셀로 저장
+        {
+            // 엑셀 파일 생성
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Sheet1");
+
+                // 헤더 작성
+                worksheet.Cell(1, 1).Value = "번호";
+                worksheet.Cell(1, 2).Value = "꿈터캐릭2";
+                worksheet.Cell(1, 3).Value = "꿈터수로";
+                worksheet.Cell(1, 4).Value = "달성본캐";
+
+                // ListView 데이터를 엑셀에 작성
+                int currentRow = 2;
+                foreach (ListViewItem item in mainListView.Items)
+                {
+                    worksheet.Cell(currentRow, 1).Value = item.SubItems[0].Text; // 번호
+                    worksheet.Cell(currentRow, 2).Value = item.SubItems[2].Text; // 꿈터캐릭2
+                    worksheet.Cell(currentRow, 3).Value = Convert.ToInt32(item.SubItems[3].Text.Replace(",","")); // 꿈터수로
+                    worksheet.Cell(currentRow, 4).Value = item.SubItems[4].Text; // 달성본캐
+                    currentRow++;
+                }
+
+                // 사용자 문서 폴더 경로
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                string todayDate = DateTime.Now.ToString("MM-dd");
+                string filePath = Path.Combine(documentsPath, "꿈터수로정리" + todayDate + ".xlsx");
+
+                // Excel 파일 저장
+                try
+                {
+                    workbook.SaveAs(filePath);
+                    MessageBox.Show($"파일이 성공적으로 저장되었습니다: {filePath}", "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"파일 저장 중 오류가 발생했습니다: {ex.Message}", "저장 실패", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void mainListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // ListView에서 선택된 아이템들의 값을 가져오기
+            if (mainListView.SelectedItems.Count > 0)
+            {
+                var selectedItem = mainListView.SelectedItems[0];
+                listViewIdx = selectedItem.Index;
+                subCharacter = selectedItem.SubItems[2].Text;
+                subScore = selectedItem.SubItems[3].Text;
+                subChaTB.Text = subCharacter;
+                scoreTB.Text = subScore;
+            }
+        }
+
+        private void characterCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            scoreListView.Items.Clear();
+
+            scoreLb.Text = "점수 합 : ";
+            solLb.Text = "조각 : ";
+
+            int idx = 0;
+            string mainCha = characterCB.Text;
+            int totalScore = 0;
+
+            for (int i = 0; mainListView.Items.Count > i; i++)
+            {
+                if (mainListView.Items[i].SubItems[4].Text == mainCha)
+                {
+                    string subCha = mainListView.Items[i].SubItems[2].Text;
+                    string subScore = mainListView.Items[i].SubItems[3].Text;
+
+                    idx++;
+                    ListViewItem item = new ListViewItem(idx.ToString());
+                    item.SubItems.Add(subCha);
+                    item.SubItems.Add(subScore);
+
+                    scoreListView.Items.Add(item);
+
+                    if (subScore.Length > 0)
+                    {
+                        string subScore2 = subScore.Replace(",", "");
+                        totalScore += Convert.ToInt32(subScore2);
+                    }
+                    else
+                    {
+                        totalScore += 0;
+                    }
+                }
+            }
+
+            if (totalScore > 0)
+            {
+                scoreLb.Text = "점수 합 : " + totalScore.ToString();
+                solLb.Text = "조각 : " + (totalScore / 1000).ToString();
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
         {
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "꿈터달성캐릭.txt");
 
@@ -351,138 +487,16 @@ namespace MapleCheckSuro
             }
         }
 
-        private void AddUniqueValuesToComboBox()
+        private void showChartBtn_Click(object sender, EventArgs e)
         {
-            // 중복을 제거할 HashSet 생성
-            HashSet<string> uniqueValues = new HashSet<string>();
-
-            // Dictionary의 값들 중복 없이 ComboBox에 추가
-            foreach (var kvp in heroDict)
+            if (chartForm == null || chartForm.IsDisposed)
             {
-                string value = kvp.Value;
-
-                // HashSet을 사용하여 중복된 값 체크 후 추가
-                if (!uniqueValues.Contains(value))
-                {
-                    comboBox1.Items.Add(value);
-                    uniqueValues.Add(value);
-                }
+                chartForm = new ChartForm(this);
+                chartForm.Show();
             }
-        }
-
-        private void cellDelBtn_Click(object sender, EventArgs e) // 불필요한 값 직접 삭제
-        {
-            characterList.RemoveAt(listViewIdx);
-            scoreList.RemoveAt(listViewIdx);
-
-            listView1.Items.RemoveAt(listViewIdx);
-        }
-
-        private void addBtn_Click(object sender, EventArgs e) // 직접 입력
-        {
-            string modifyName = subChaTB.Text;
-            string modifyScore = scoreTB.Text;
-
-            ListViewItem listViewItem = new ListViewItem((listView1.Items.Count+1).ToString());
-            listViewItem.SubItems.Add(modifyName);
-            listViewItem.SubItems.Add(modifyName);
-            listViewItem.SubItems.Add(modifyScore);
-
-            if (heroDict.Count > 0)
+            else
             {
-                if (heroDict.ContainsKey(modifyName))
-                {
-                    listViewItem.SubItems.Add(heroDict[modifyName]);
-                }
-            }
-
-            listView1.Items.Add(listViewItem);
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            listView2.Items.Clear();
-
-            scoreLb.Text = "점수 합 : ";
-            solLb.Text = "조각 : ";
-
-            int idx = 0;
-            string mainCha = comboBox1.Text;
-            int totalScore = 0;
-
-            for (int i = 0; listView1.Items.Count > i; i++)
-            {
-                if (listView1.Items[i].SubItems[4].Text == mainCha)
-                {
-                    string subCha = listView1.Items[i].SubItems[2].Text;
-                    string subScore = listView1.Items[i].SubItems[3].Text;
-
-                    idx++;
-                    ListViewItem item = new ListViewItem(idx.ToString());
-                    item.SubItems.Add(subCha);
-                    item.SubItems.Add(subScore);
-
-                    listView2.Items.Add(item);
-
-                    if (subScore.Length > 0)
-                    {
-                        string subScore2 = subScore.Replace(",", "");
-                        totalScore += Convert.ToInt32(subScore2);
-                    }
-                    else
-                    {
-                        totalScore += 0;
-                    }
-                }
-            }
-
-            if (totalScore > 0)
-            {
-                scoreLb.Text = "점수 합 : " + totalScore.ToString();
-                solLb.Text = "조각 : " + (totalScore / 1000).ToString();
-            }
-        }
-
-        private void exportExcelBtn_Click(object sender, EventArgs e) // ListView의 내용을 엑셀로 저장
-        {
-            // 엑셀 파일 생성
-            using (var workbook = new XLWorkbook())
-            {
-                var worksheet = workbook.Worksheets.Add("Sheet1");
-
-                // 헤더 작성
-                worksheet.Cell(1, 1).Value = "번호";
-                worksheet.Cell(1, 2).Value = "꿈터캐릭2";
-                worksheet.Cell(1, 3).Value = "꿈터수로";
-                worksheet.Cell(1, 4).Value = "달성본캐";
-
-                // ListView 데이터를 엑셀에 작성
-                int currentRow = 2;
-                foreach (ListViewItem item in listView1.Items)
-                {
-                    worksheet.Cell(currentRow, 1).Value = item.SubItems[0].Text; // 번호
-                    worksheet.Cell(currentRow, 2).Value = item.SubItems[2].Text; // 꿈터캐릭2
-                    worksheet.Cell(currentRow, 3).Value = Convert.ToInt32(item.SubItems[3].Text.Replace(",","")); // 꿈터수로
-                    worksheet.Cell(currentRow, 4).Value = item.SubItems[4].Text; // 달성본캐
-                    currentRow++;
-                }
-
-                // 사용자 문서 폴더 경로
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-                string todayDate = DateTime.Now.ToString("MM-dd");
-                string filePath = Path.Combine(documentsPath, "꿈터수로정리" + todayDate + ".xlsx");
-
-                // Excel 파일 저장
-                try
-                {
-                    workbook.SaveAs(filePath);
-                    MessageBox.Show($"파일이 성공적으로 저장되었습니다: {filePath}", "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"파일 저장 중 오류가 발생했습니다: {ex.Message}", "저장 실패", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                chartForm.Focus(); // 이미 열려있는 경우 Form2에 포커스를 줌
             }
         }
     }

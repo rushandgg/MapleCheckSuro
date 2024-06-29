@@ -36,7 +36,7 @@
             this.subChaTB = new System.Windows.Forms.TextBox();
             this.addBtn = new System.Windows.Forms.Button();
             this.loadBtn = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.characterLB = new System.Windows.Forms.ListBox();
             this.saveBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.clearBtn = new System.Windows.Forms.Button();
@@ -109,15 +109,15 @@
             this.loadBtn.UseVisualStyleBackColor = true;
             this.loadBtn.Click += new System.EventHandler(this.loadBtn_Click);
             // 
-            // listBox1
+            // characterLB
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(33, 147);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(609, 184);
-            this.listBox1.TabIndex = 7;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.characterLB.FormattingEnabled = true;
+            this.characterLB.ItemHeight = 12;
+            this.characterLB.Location = new System.Drawing.Point(33, 147);
+            this.characterLB.Name = "characterLB";
+            this.characterLB.Size = new System.Drawing.Size(609, 184);
+            this.characterLB.TabIndex = 7;
+            this.characterLB.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // saveBtn
             // 
@@ -166,7 +166,7 @@
             this.Controls.Add(this.clearBtn);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.saveBtn);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.characterLB);
             this.Controls.Add(this.loadBtn);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.subChaTB);
@@ -191,7 +191,7 @@
         private System.Windows.Forms.TextBox subChaTB;
         private System.Windows.Forms.Button addBtn;
         private System.Windows.Forms.Button loadBtn;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox characterLB;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button clearBtn;

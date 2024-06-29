@@ -1,6 +1,6 @@
 ﻿namespace MapleCheckSuro
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imgBtn = new System.Windows.Forms.Button();
             this.extractBtn = new System.Windows.Forms.Button();
@@ -38,7 +38,7 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.mainListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -108,12 +108,12 @@
             this.label107 = new System.Windows.Forms.Label();
             this.label108 = new System.Windows.Forms.Label();
             this.addBtn = new System.Windows.Forms.Button();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.scoreListView = new System.Windows.Forms.ListView();
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label109 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.characterCB = new System.Windows.Forms.ComboBox();
             this.label110 = new System.Windows.Forms.Label();
             this.scoreLb = new System.Windows.Forms.Label();
             this.solLb = new System.Windows.Forms.Label();
@@ -168,6 +168,7 @@
             this.label100 = new System.Windows.Forms.Label();
             this.label101 = new System.Windows.Forms.Label();
             this.exportExcelBtn = new System.Windows.Forms.Button();
+            this.showChartBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -260,24 +261,24 @@
             this.pictureBox6.TabIndex = 8;
             this.pictureBox6.TabStop = false;
             // 
-            // listView1
+            // mainListView
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.mainListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader8,
             this.columnHeader3,
             this.columnHeader4});
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(756, 12);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(379, 422);
-            this.listView1.TabIndex = 9;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listView1_ItemSelectionChanged);
+            this.mainListView.FullRowSelect = true;
+            this.mainListView.GridLines = true;
+            this.mainListView.HideSelection = false;
+            this.mainListView.Location = new System.Drawing.Point(756, 12);
+            this.mainListView.Name = "mainListView";
+            this.mainListView.Size = new System.Drawing.Size(379, 422);
+            this.mainListView.TabIndex = 9;
+            this.mainListView.UseCompatibleStateImageBehavior = false;
+            this.mainListView.View = System.Windows.Forms.View.Details;
+            this.mainListView.SelectedIndexChanged += new System.EventHandler(this.mainListView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -882,21 +883,21 @@
             this.addBtn.UseVisualStyleBackColor = true;
             this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
-            // listView2
+            // scoreListView
             // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.scoreListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader7});
-            this.listView2.FullRowSelect = true;
-            this.listView2.GridLines = true;
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(1143, 77);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(209, 353);
-            this.listView2.TabIndex = 124;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.scoreListView.FullRowSelect = true;
+            this.scoreListView.GridLines = true;
+            this.scoreListView.HideSelection = false;
+            this.scoreListView.Location = new System.Drawing.Point(1143, 77);
+            this.scoreListView.Name = "scoreListView";
+            this.scoreListView.Size = new System.Drawing.Size(209, 353);
+            this.scoreListView.TabIndex = 124;
+            this.scoreListView.UseCompatibleStateImageBehavior = false;
+            this.scoreListView.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader5
             // 
@@ -922,14 +923,14 @@
             this.label109.TabIndex = 125;
             this.label109.Text = "달성본캐";
             // 
-            // comboBox1
+            // characterCB
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(1200, 34);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(116, 20);
-            this.comboBox1.TabIndex = 126;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.characterCB.FormattingEnabled = true;
+            this.characterCB.Location = new System.Drawing.Point(1200, 34);
+            this.characterCB.Name = "characterCB";
+            this.characterCB.Size = new System.Drawing.Size(116, 20);
+            this.characterCB.TabIndex = 126;
+            this.characterCB.SelectedIndexChanged += new System.EventHandler(this.characterCB_SelectedIndexChanged);
             // 
             // label110
             // 
@@ -1420,11 +1421,22 @@
             this.exportExcelBtn.UseVisualStyleBackColor = true;
             this.exportExcelBtn.Click += new System.EventHandler(this.exportExcelBtn_Click);
             // 
-            // Form1
+            // showChartBtn
+            // 
+            this.showChartBtn.Location = new System.Drawing.Point(1145, 440);
+            this.showChartBtn.Name = "showChartBtn";
+            this.showChartBtn.Size = new System.Drawing.Size(58, 46);
+            this.showChartBtn.TabIndex = 181;
+            this.showChartBtn.Text = "(5) 차트";
+            this.showChartBtn.UseVisualStyleBackColor = true;
+            this.showChartBtn.Click += new System.EventHandler(this.showChartBtn_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1381, 565);
+            this.Controls.Add(this.showChartBtn);
             this.Controls.Add(this.exportExcelBtn);
             this.Controls.Add(this.label92);
             this.Controls.Add(this.label93);
@@ -1479,9 +1491,9 @@
             this.Controls.Add(this.solLb);
             this.Controls.Add(this.scoreLb);
             this.Controls.Add(this.label110);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.characterCB);
             this.Controls.Add(this.label109);
-            this.Controls.Add(this.listView2);
+            this.Controls.Add(this.scoreListView);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.label102);
             this.Controls.Add(this.label103);
@@ -1546,7 +1558,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.characterBtn);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.mainListView);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox4);
@@ -1557,9 +1569,9 @@
             this.Controls.Add(this.imgBtn);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "꿈터 수로 계산 프로그램 v1.1.0";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -1582,7 +1594,6 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
@@ -1651,12 +1662,12 @@
         private System.Windows.Forms.Label label107;
         private System.Windows.Forms.Label label108;
         private System.Windows.Forms.Button addBtn;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ListView scoreListView;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.Label label109;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox characterCB;
         private System.Windows.Forms.Label label110;
         private System.Windows.Forms.Label scoreLb;
         private System.Windows.Forms.Label solLb;
@@ -1712,6 +1723,8 @@
         private System.Windows.Forms.Label label101;
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.Button exportExcelBtn;
+        private System.Windows.Forms.Button showChartBtn;
+        public System.Windows.Forms.ListView mainListView;
     }
 }
 

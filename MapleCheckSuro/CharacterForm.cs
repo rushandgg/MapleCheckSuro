@@ -14,18 +14,17 @@ namespace MapleCheckSuro
 {
     public partial class CharacterForm : Form
     {
-        private Form1 form1;
+        private MainForm mainForm;
 
-        public CharacterForm(Form1 form1)
+        public CharacterForm(MainForm mainForm)
         {
             InitializeComponent();
-            this.form1 = form1;
+            this.mainForm = mainForm;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
             AddList();
-            
         }
 
         private void AddList()
@@ -37,16 +36,15 @@ namespace MapleCheckSuro
                 for (int i = 0; i < subArray.Length; i++)
                 {
                     string subCharacter = subArray[i];
-                    if (form1.heroDict.ContainsKey(subCharacter))
+                    if (mainForm.heroDict.ContainsKey(subCharacter))
                     {
 
                     }
                     else
                     {
-                        form1.heroDict.Add(subCharacter, mainCharacter);
+                        mainForm.heroDict.Add(subCharacter, mainCharacter);
                     }
                 }
-
                 // 입력했던 컨트롤 초기화
                 mainChaTB.Text = "";
                 subChaTB.Text = "";
@@ -58,12 +56,12 @@ namespace MapleCheckSuro
 
         private void ShowListBox()
         {
-            listBox1.Items.Clear(); // listBox 초기화
+            characterLB.Items.Clear(); // listBox 초기화
 
-            if (form1.heroDict.Count > 0)
+            if (mainForm.heroDict.Count > 0)
             {
                 // 값을 기준으로 그룹화하여 출력
-                var groupedByKey = form1.heroDict.GroupBy(kvp => kvp.Value);
+                var groupedByKey = mainForm.heroDict.GroupBy(kvp => kvp.Value);
 
                 // 그룹화된 결과를 출력
                 foreach (var group in groupedByKey)
@@ -76,14 +74,14 @@ namespace MapleCheckSuro
 
                     }
 
-                    listBox1.Items.Add(allHero);
+                    characterLB.Items.Add(allHero);
                 }
             }
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            if (form1.heroDict.Count > 0)
+            if (mainForm.heroDict.Count > 0)
             {
                 string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 string filePath = System.IO.Path.Combine(myDocumentsPath, "꿈터달성캐릭.txt");
@@ -93,7 +91,7 @@ namespace MapleCheckSuro
                     // StreamWriter를 사용하여 UTF-8 형식으로 파일 쓰기
                     using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
                     {
-                        foreach (var item in listBox1.Items)
+                        foreach (var item in characterLB.Items)
                         {
                             writer.WriteLine(item.ToString());
                         }
@@ -118,8 +116,8 @@ namespace MapleCheckSuro
 
         private void clearBtn_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear(); // listBox 초기화
-            form1.heroDict.Clear();
+            characterLB.Items.Clear(); // listBox 초기화
+            mainForm.heroDict.Clear();
             MessageBox.Show("초기화 되었습니다.");
         }
 
@@ -134,7 +132,7 @@ namespace MapleCheckSuro
                 string[] lines = File.ReadAllLines(filePath);
 
                 // Dictionary 초기화
-                form1.heroDict.Clear();
+                mainForm.heroDict.Clear();
 
                 // 데이터를 Dictionary에 저장
                 foreach (string line in lines)
@@ -149,7 +147,7 @@ namespace MapleCheckSuro
                         // Dictionary에 추가
                         for (int i = 0; i < subCharacters.Length; i++) 
                         {
-                            form1.heroDict.Add(subCharacters[i], mainCharacter);
+                            mainForm.heroDict.Add(subCharacters[i], mainCharacter);
                         }
                     }
                 }
@@ -165,9 +163,9 @@ namespace MapleCheckSuro
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem != null)
+            if (characterLB.SelectedItem != null)
             {
-                string selectedItem = listBox1.SelectedItem.ToString();
+                string selectedItem = characterLB.SelectedItem.ToString();
 
                 int delimiterIndex = selectedItem.IndexOf(" : ");
                 if (delimiterIndex != -1)
