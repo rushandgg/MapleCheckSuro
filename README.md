@@ -2,6 +2,8 @@
 - 메이플스토리 길드컨텐츠 수로 점수 정산 프로그램<br/>
 - 길드원 수로 점수 표시하는 부분이 Nexon API에서 제공하지 않음<br/>
 - 인게임 내의 이미지를 업로드하면 텍스트로 인식하여 점수를 정산함<br/><br/>
+- Google Cloud Vision API를 통해 이미지 내 텍스트 인식, API Key 발급 필수<br/><br/>
+
 
 - Program Language : C#<br/>
 - Framework : .net framework 4.8 <br/>
